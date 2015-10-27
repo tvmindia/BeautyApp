@@ -22,6 +22,8 @@ namespace BeautyAppWebServices
                 if (SQLCon.State == ConnectionState.Closed)
                 {
 
+
+
                     SQLCon.Open();
                 }
                 return 1;
