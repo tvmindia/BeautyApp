@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using System.Web.Script.Services;
 using System.Web.Services;
 
 
@@ -21,6 +22,7 @@ namespace BeautyAppWebServices
     {
 
         [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]  
         public string GetServicesList()
         {
             SqlConnection con = null;
