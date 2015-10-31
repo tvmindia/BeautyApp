@@ -36,36 +36,8 @@ namespace BeautyAppWebServices
                 SqlCommand cmd = new SqlCommand("GetServices", con);
                 cmd.CommandType = CommandType.StoredProcedure;
 
-
-                SqlDataAdapter sda = new SqlDataAdapter();
-                sda.SelectCommand = cmd;
-                ds = new DataSet();
-                sda.Fill(ds);
-
-                DataTable dt = ds.Tables[0];
-
-                System.Web.Script.Serialization.JavaScriptSerializer serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
-                List<Dictionary<string, object>> rows = new List<Dictionary<string, object>>();
-                Dictionary<string, object> row;
-                foreach (DataRow dr in dt.Rows)
-                {
-                    row = new Dictionary<string, object>();
-                    foreach (DataColumn col in dt.Columns)
-                    {
-                        row.Add(col.ColumnName, dr[col]);
-                    }
-                    rows.Add(row);
-                }
-                this.Context.Response.ContentType = "";
-
-             //////////////////
-
-                
-
-                //////////////////////////
-
-
-                return  serializer.Serialize(rows);
+                return getDbDataAsJSON(cmd);
+             
             }
             catch (Exception ex)
             {
@@ -148,7 +120,7 @@ namespace BeautyAppWebServices
         public string GetServiceTypes(string ServiceCode)
         {
             SqlConnection con = null;
-            DataSet ds = null;
+          
             try
             {
                 dbConnection dcon = new dbConnection();
@@ -157,6 +129,33 @@ namespace BeautyAppWebServices
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@ServiceCode", ServiceCode);
 
+                return getDbDataAsJSON(cmd);
+
+               
+            }
+            catch (Exception ex)
+            {
+
+            }
+            finally
+            {
+                if (con != null)
+                {
+
+                    con.Dispose();
+
+                }
+            }
+
+            return "";
+        }
+
+
+        public String getDbDataAsJSON(SqlCommand cmd)
+        {
+            try
+            {
+                DataSet ds = null;
                 SqlDataAdapter sda = new SqlDataAdapter();
                 sda.SelectCommand = cmd;
                 ds = new DataSet();
@@ -186,22 +185,21 @@ namespace BeautyAppWebServices
 
 
                 return serializer.Serialize(rows);
+
+
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
+                return "";
             }
             finally
             {
-                if (con != null)
-                {
 
-                    con.Dispose();
-
-                }
             }
-
-            return "";
+            
         }
+
+
     }
 }
