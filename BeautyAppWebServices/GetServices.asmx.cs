@@ -28,7 +28,7 @@ namespace BeautyAppWebServices
         public string GetServicesList()
         {
             SqlConnection con = null;
-            DataSet ds = null;
+           
             try
             {
                 dbConnection dcon = new dbConnection();
@@ -56,65 +56,7 @@ namespace BeautyAppWebServices
             return "";
         }
 
-        [WebMethod]
-        public string GetServicesList1()
-        {
-            SqlConnection con = null;
-            DataSet ds = null;
-            try
-            {
-                dbConnection dcon = new dbConnection();
-                con = dcon.GetDBConnection();
-                SqlCommand cmd = new SqlCommand("GetServices", con);
-                cmd.CommandType = CommandType.StoredProcedure;
-
-
-                SqlDataAdapter sda = new SqlDataAdapter();
-                sda.SelectCommand = cmd;
-                ds = new DataSet();
-                sda.Fill(ds);
-
-                DataTable dt = ds.Tables[0];
-
-                System.Web.Script.Serialization.JavaScriptSerializer serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
-                List<Dictionary<string, object>> rows = new List<Dictionary<string, object>>();
-                Dictionary<string, object> row;
-                foreach (DataRow dr in dt.Rows)
-                {
-                    row = new Dictionary<string, object>();
-                    foreach (DataColumn col in dt.Columns)
-                    {
-                        row.Add(col.ColumnName, dr[col]);
-                    }
-                    rows.Add(row);
-                }
-                this.Context.Response.ContentType = "";
-
-                //////////////////
-
-
-
-                //////////////////////////
-
-
-                return serializer.Serialize(rows);
-            }
-            catch (Exception ex)
-            {
-
-            }
-            finally
-            {
-                if (con != null)
-                {
-
-                    con.Dispose();
-
-                }
-            }
-
-            return "";
-        }
+        
 
         [WebMethod]
         public string GetServiceTypes(string ServiceCode)
