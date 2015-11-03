@@ -92,6 +92,41 @@ namespace BeautyAppWebServices
             return "";
         }
 
+        [WebMethod]
+        public string GetSearchResults(string ServiceCode, string sTypeCode)
+        {
+            SqlConnection con = null;
+
+            try
+            {
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand("GetSearchResults", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@ServiceCode", ServiceCode);
+                cmd.Parameters.AddWithValue("@S_typeCode", sTypeCode);
+
+                return getDbDataAsJSON(cmd);
+
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+            finally
+            {
+                if (con != null)
+                {
+
+                    con.Dispose();
+
+                }
+            }
+
+            return "";
+        }
+
 
         public String getDbDataAsJSON(SqlCommand cmd)
         {
