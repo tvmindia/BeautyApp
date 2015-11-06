@@ -128,6 +128,42 @@ namespace BeautyAppWebServices
         }
 
 
+        [WebMethod]
+        public string GetServiceProviderDetails(string ProviderCode, string sTypeCode)
+        {
+            SqlConnection con = null;
+
+            try
+            {
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand("GetServiceProviderResults", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@ProviderCode", ProviderCode);
+                cmd.Parameters.AddWithValue("@S_typeCode", sTypeCode);
+
+                return getDbDataAsJSON(cmd);
+
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+            finally
+            {
+                if (con != null)
+                {
+
+                    con.Dispose();
+
+                }
+            }
+
+            return "";
+        }
+
+
         public String getDbDataAsJSON(SqlCommand cmd)
         {
             try
