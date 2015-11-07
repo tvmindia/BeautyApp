@@ -76,22 +76,22 @@ namespace BeautyAppWebServices {
         protected global::System.Web.UI.WebControls.DropDownList ddlKey;
         
         /// <summary>
-        /// FileUpload1 control.
+        /// fumaster control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.FileUpload FileUpload1;
+        protected global::System.Web.UI.WebControls.FileUpload fumaster;
         
         /// <summary>
-        /// Button1 control.
+        /// btnmaster control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button1;
+        protected global::System.Web.UI.WebControls.Button btnmaster;
         
         /// <summary>
         /// divProvidersNServices control.
@@ -121,22 +121,22 @@ namespace BeautyAppWebServices {
         protected global::System.Web.UI.WebControls.DropDownList ddlService;
         
         /// <summary>
-        /// FileUpload2 control.
+        /// fuProviderService control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.FileUpload FileUpload2;
+        protected global::System.Web.UI.WebControls.FileUpload fuProviderService;
         
         /// <summary>
-        /// Button2 control.
+        /// btnProviderService control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button2;
+        protected global::System.Web.UI.WebControls.Button btnProviderService;
         
         /// <summary>
         /// divProvidersnStyles control.
@@ -148,48 +148,48 @@ namespace BeautyAppWebServices {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divProvidersnStyles;
         
         /// <summary>
-        /// DropDownList1 control.
+        /// ddlProvider1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DropDownList1;
+        protected global::System.Web.UI.WebControls.DropDownList ddlProvider1;
         
         /// <summary>
-        /// DropDownList2 control.
+        /// ddlService1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DropDownList2;
+        protected global::System.Web.UI.WebControls.DropDownList ddlService1;
         
         /// <summary>
-        /// DropDownList3 control.
+        /// ddlStyle control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DropDownList3;
+        protected global::System.Web.UI.WebControls.DropDownList ddlStyle;
         
         /// <summary>
-        /// FileUpload3 control.
+        /// fuProviderStyle control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.FileUpload FileUpload3;
+        protected global::System.Web.UI.WebControls.FileUpload fuProviderStyle;
         
         /// <summary>
-        /// Button3 control.
+        /// btnProviderStyle control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button3;
+        protected global::System.Web.UI.WebControls.Button btnProviderStyle;
     }
 }

@@ -47,5 +47,25 @@ namespace BeautyAppWebServices
                 divProvidersnStyles.Visible = true;
             }
         }
+
+        protected void btnmaster_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void ddlProvider_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void ddlService1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void btnProviderStyle_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

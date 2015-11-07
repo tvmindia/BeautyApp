@@ -44,11 +44,11 @@
                                 </tr>
                                 <tr>
                                     <td colspan="2">
-                                        <asp:FileUpload ID="FileUpload1" runat="server" Font-Names="Segoe UI" Font-Size="Large" /></td>
+                                        <asp:FileUpload ID="fumaster" runat="server" Font-Names="Segoe UI" Font-Size="Large" /></td>
                                 </tr>
                                 <tr>
                                     <td colspan="2">
-                                        <asp:Button ID="Button1" runat="server" Text="Update" Font-Names="Segoe UI" Font-Size="Large" /></td>
+                                        <asp:Button ID="btnmaster" runat="server" Text="Update" Font-Names="Segoe UI" Font-Size="Large" OnClick="btnmaster_Click" /></td>
                                 </tr>
                             </table>
 
@@ -65,7 +65,7 @@
                                 <tr>
                                     <td style="width: 50%">Select Provider</td>
                                     <td style="width: 50%">
-                                        <asp:DropDownList ID="ddlProvider" runat="server" Font-Names="Segoe UI" Font-Size="Large" Width="90%" AutoPostBack="true" OnSelectedIndexChanged="ddlTable_SelectedIndexChanged">
+                                        <asp:DropDownList ID="ddlProvider" runat="server" Font-Names="Segoe UI" Font-Size="Large" Width="90%" AutoPostBack="true" OnSelectedIndexChanged="ddlProvider_SelectedIndexChanged">
                                         </asp:DropDownList></td>
                                 </tr>
                                 <tr>
@@ -76,11 +76,11 @@
                                 </tr>
                                 <tr>
                                     <td colspan="2">
-                                        <asp:FileUpload ID="FileUpload2" runat="server" Font-Names="Segoe UI" Font-Size="Large" /></td>
+                                        <asp:FileUpload ID="fuProviderService" runat="server" Font-Names="Segoe UI" Font-Size="Large" /></td>
                                 </tr>
                                 <tr>
                                     <td colspan="2">
-                                        <asp:Button ID="Button2" runat="server" Text="Update" Font-Names="Segoe UI" Font-Size="Large" /></td>
+                                        <asp:Button ID="btnProviderService" runat="server" Text="Update" Font-Names="Segoe UI" Font-Size="Large" /></td>
                                 </tr>
                             </table>
 
@@ -97,28 +97,28 @@
                                 <tr>
                                     <td style="width: 50%">Select Provider</td>
                                     <td style="width: 50%">
-                                        <asp:DropDownList ID="DropDownList1" runat="server" Font-Names="Segoe UI" Font-Size="Large" Width="90%" AutoPostBack="true" OnSelectedIndexChanged="ddlTable_SelectedIndexChanged">
+                                        <asp:DropDownList ID="ddlProvider1" runat="server" Font-Names="Segoe UI" Font-Size="Large" Width="90%" AutoPostBack="true" OnSelectedIndexChanged="ddlTable_SelectedIndexChanged">
                                         </asp:DropDownList></td>
                                 </tr>
                                 <tr>
                                     <td>Select Service</td>
                                     <td>
-                                        <asp:DropDownList ID="DropDownList2" runat="server" Font-Names="Segoe UI" Font-Size="Large" Width="90%">
+                                        <asp:DropDownList ID="ddlService1" runat="server" Font-Names="Segoe UI" Font-Size="Large" Width="90%" AutoPostBack="true" OnSelectedIndexChanged="ddlService1_SelectedIndexChanged">
                                         </asp:DropDownList></td>
                                 </tr>
                                    <tr>
                                     <td>Select Style</td>
                                     <td>
-                                        <asp:DropDownList ID="DropDownList3" runat="server" Font-Names="Segoe UI" Font-Size="Large" Width="90%">
+                                        <asp:DropDownList ID="ddlStyle" runat="server" Font-Names="Segoe UI" Font-Size="Large" Width="90%">
                                         </asp:DropDownList></td>
                                 </tr>
                                 <tr>
                                     <td colspan="2">
-                                        <asp:FileUpload ID="FileUpload3" runat="server" Font-Names="Segoe UI" Font-Size="Large" /></td>
+                                        <asp:FileUpload ID="fuProviderStyle" runat="server" Font-Names="Segoe UI" Font-Size="Large" /></td>
                                 </tr>
                                 <tr>
                                     <td colspan="2">
-                                        <asp:Button ID="Button3" runat="server" Text="Update" Font-Names="Segoe UI" Font-Size="Large" /></td>
+                                        <asp:Button ID="btnProviderStyle" runat="server" Text="Update" Font-Names="Segoe UI" Font-Size="Large" OnClick="btnProviderStyle_Click" /></td>
                                 </tr>
                             </table>
 
