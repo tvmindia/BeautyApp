@@ -36,7 +36,7 @@ namespace BeautyAppWebServices
                 SqlCommand cmd = new SqlCommand("GetServices", con);
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                return getDbDataAsJSON(cmd);
+                return getDbDataAsJSON(cmd,"");
              
             }
             catch (Exception ex)
@@ -71,7 +71,7 @@ namespace BeautyAppWebServices
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@ServiceCode", ServiceCode);
 
-                return getDbDataAsJSON(cmd);
+                return getDbDataAsJSON(cmd,"");
 
                
             }
@@ -137,12 +137,12 @@ namespace BeautyAppWebServices
             {
                 dbConnection dcon = new dbConnection();
                 con = dcon.GetDBConnection();
-                SqlCommand cmd = new SqlCommand("GetServiceProviderResults", con);
+                SqlCommand cmd = new SqlCommand("GetServiceProviderDetails", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@ProviderCode", ProviderCode);
                 cmd.Parameters.AddWithValue("@S_typeCode", sTypeCode);
 
-                return getDbDataAsJSON(cmd);
+                return getDbDataAsJSON(cmd, "ProviderImage", "ProviderImageName");  //passing col names of image and imagefilename
 
 
             }
@@ -164,7 +164,7 @@ namespace BeautyAppWebServices
         }
 
 
-        public String getDbDataAsJSON(SqlCommand cmd)
+        public String getDbDataAsJSON(SqlCommand cmd, String imgColName="", String imgFileNameCol="")
         {
             try
             {
@@ -175,6 +175,7 @@ namespace BeautyAppWebServices
                 sda.Fill(ds);
 
                 DataTable dt = ds.Tables[0];
+                String filePath = Server.MapPath("~/tempImages/");      //temporary folder to store images
 
                 System.Web.Script.Serialization.JavaScriptSerializer serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
                 List<Dictionary<string, object>> rows = new List<Dictionary<string, object>>();
@@ -184,21 +185,26 @@ namespace BeautyAppWebServices
                     row = new Dictionary<string, object>();
                     foreach (DataColumn col in dt.Columns)
                     {
-                        row.Add(col.ColumnName, dr[col]);
+                        if (imgColName == col.ColumnName)                   //checking is that the coloumn contain binary image
+                        {
+                            if (dr[col] != DBNull.Value)                    //checking for no image uploaded(null)
+                            { 
+                            byte[] buffer =(byte[]) dr[col];                //getting bytes
+                            System.IO.File.WriteAllBytes(filePath+dr[imgFileNameCol], buffer);  //writing file with image name from coloumn imgFileNameCol
+                            row.Add("url", filePath + dr[imgFileNameCol]);                      //giving url in JSON
+                            }
+                        }                                       
+                        else                                                              //JSON adding each item
+                        {if(col.ColumnName != imgFileNameCol)                           //skipping imageFileName in JSON 
+                            row.Add(col.ColumnName, dr[col]);
+                        }
                     }
                     rows.Add(row);
                 }
+
                 this.Context.Response.ContentType = "";
-
-                //////////////////
-
-
-
-                //////////////////////////
-
-
+                
                 return serializer.Serialize(rows);
-
 
             }
             catch (Exception)
