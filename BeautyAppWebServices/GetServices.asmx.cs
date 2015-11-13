@@ -106,7 +106,7 @@ namespace BeautyAppWebServices
                 cmd.Parameters.AddWithValue("@ServiceCode", ServiceCode);
                 cmd.Parameters.AddWithValue("@S_typeCode", sTypeCode);
 
-                return getDbDataAsJSON(cmd);
+                return getDbDataAsJSON(cmd, "StyleImg", "StyleImageName");
 
 
             }
@@ -188,10 +188,14 @@ namespace BeautyAppWebServices
                         if (imgColName == col.ColumnName)                   //checking is that the coloumn contain binary image
                         {
                             if (dr[col] != DBNull.Value)                    //checking for no image uploaded(null)
-                            { 
-                            byte[] buffer =(byte[]) dr[col];                //getting bytes
-                            System.IO.File.WriteAllBytes(filePath+dr[imgFileNameCol], buffer);  //writing file with image name from coloumn imgFileNameCol
-                            row.Add("url", filePath + dr[imgFileNameCol]);                      //giving url in JSON
+                            {
+                                String fileURL = filePath + DateTime.Now.ToString("ddHHmmssfff") + dr[imgFileNameCol];//timestamping imagefilename
+                                if (!System.IO.File.Exists(fileURL))         
+                                {
+                                    byte[] buffer = (byte[])dr[col];                                
+                                    System.IO.File.WriteAllBytes(fileURL, buffer); //writing file with image name from coloumn imgFileNameCol
+                                }                                        
+                            row.Add("url", fileURL);                        //giving url in JSON
                             }
                         }                                       
                         else                                                              //JSON adding each item
