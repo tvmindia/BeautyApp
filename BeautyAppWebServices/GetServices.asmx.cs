@@ -36,7 +36,7 @@ namespace BeautyAppWebServices
                 SqlCommand cmd = new SqlCommand("GetServices", con);
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                return getDbDataAsJSON(cmd,"");
+                return getDbDataAsJSON(cmd);
              
             }
             catch (Exception ex)
@@ -56,7 +56,38 @@ namespace BeautyAppWebServices
             return "";
         }
 
-        
+
+        [WebMethod]
+        public string GetOffers()
+        {
+            SqlConnection con = null;
+
+            try
+            {
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand("GetOffers", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                return getDbDataAsJSON(cmd, "OfferImage","ImageName");
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+            finally
+            {
+                if (con != null)
+                {
+
+                    con.Dispose();
+
+                }
+            }
+
+            return "";
+        }
 
         [WebMethod]
         public string GetServiceTypes(string ServiceCode)
@@ -71,7 +102,7 @@ namespace BeautyAppWebServices
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@ServiceCode", ServiceCode);
 
-                return getDbDataAsJSON(cmd,"");
+                return getDbDataAsJSON(cmd);
 
                
             }
