@@ -90,7 +90,7 @@ namespace BeautyAppWebServices
         }
 
         [WebMethod]
-        public string GetNotifications(string notIDs, string expiryDate)
+        public string GetNotifications(string notIDs)
         {
             SqlConnection con = null;
 
@@ -101,7 +101,6 @@ namespace BeautyAppWebServices
                 SqlCommand cmd = new SqlCommand("GetNotifications", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@Notification_ID", notIDs);
-                cmd.Parameters.AddWithValue("@Expiry_Date", expiryDate);
 
                 return getDbDataAsJSON(cmd);
 
