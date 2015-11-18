@@ -90,6 +90,40 @@ namespace BeautyAppWebServices
         }
 
         [WebMethod]
+        public string GetNotifications(string notIDs, string expiryDate)
+        {
+            SqlConnection con = null;
+
+            try
+            {
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand("GetNotifications", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@Notification_ID", notIDs);
+                cmd.Parameters.AddWithValue("@Expiry_Date", expiryDate);
+
+                return getDbDataAsJSON(cmd);
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+            finally
+            {
+                if (con != null)
+                {
+
+                    con.Dispose();
+
+                }
+            }
+
+            return "";
+        }
+
+        [WebMethod]
         public string GetServiceTypes(string ServiceCode)
         {
             SqlConnection con = null;
