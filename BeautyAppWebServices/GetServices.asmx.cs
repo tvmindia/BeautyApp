@@ -8,13 +8,12 @@ using System.Web.Script.Services;
 using System.Web.Services;
 using System.Xml;
 using System.Xml.Serialization;
+using System.Collections;
 
 
 namespace BeautyAppWebServices
 {
-    /// <summary>
-    /// Summary description for GetServices
-    /// </summary>
+ 
     [WebService(Namespace = "http://192.168.1.102/Beauty")]
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
     [System.ComponentModel.ToolboxItem(false)]
@@ -68,8 +67,11 @@ namespace BeautyAppWebServices
                 con = dcon.GetDBConnection();
                 SqlCommand cmd = new SqlCommand("GetOffers", con);
                 cmd.CommandType = CommandType.StoredProcedure;
-
-                return getDbDataAsJSON(cmd, "OfferImage","ImageName");
+                ArrayList imgColNames = new ArrayList();
+                ArrayList imgFileNameCols = new ArrayList();
+                imgColNames.Add("OfferImage");
+                imgFileNameCols.Add("ImageName");
+                return getDbDataAsJSON(cmd, imgColNames, imgFileNameCols);
 
             }
             catch (Exception ex)
@@ -134,10 +136,8 @@ namespace BeautyAppWebServices
                 SqlCommand cmd = new SqlCommand("GetServiceTypes", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@ServiceCode", ServiceCode);
-
                 return getDbDataAsJSON(cmd);
-
-               
+              
             }
             catch (Exception ex)
             {
@@ -169,8 +169,11 @@ namespace BeautyAppWebServices
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@ServiceCode", ServiceCode);
                 cmd.Parameters.AddWithValue("@S_typeCode", sTypeCode);
-
-                return getDbDataAsJSON(cmd, "StyleImg", "StyleImageName");
+                ArrayList imgColNames = new ArrayList();
+                ArrayList imgFileNameCols = new ArrayList();
+                imgColNames.Add("StyleImg");
+                imgFileNameCols.Add("StyleImageName");
+                return getDbDataAsJSON(cmd, imgColNames, imgFileNameCols);
 
 
             }
@@ -205,10 +208,13 @@ namespace BeautyAppWebServices
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@ProviderCode", ProviderCode);
                 cmd.Parameters.AddWithValue("@S_typeCode", sTypeCode);
-
-                return getDbDataAsJSON(cmd, "ProviderImage", "ProviderImageName");  //passing col names of image and imagefilename
-
-
+                ArrayList imgColNames = new ArrayList();
+                ArrayList imgFileNameCols = new ArrayList();
+                imgColNames.Add("ProviderImage");
+                imgFileNameCols.Add("ProviderImageName");
+                imgColNames.Add("StyleImg");
+                imgFileNameCols.Add("StyleImageName");
+                return getDbDataAsJSON(cmd, imgColNames,imgFileNameCols);  //passing col names of image and imagefilename
             }
             catch (Exception ex)
             {
@@ -228,7 +234,7 @@ namespace BeautyAppWebServices
         }
 
 
-        public String getDbDataAsJSON(SqlCommand cmd, String imgColName="", String imgFileNameCol="")
+        public String getDbDataAsJSON(SqlCommand cmd, ArrayList imgColName, ArrayList imgFileNameCol)
         {
             try
             {
@@ -237,7 +243,6 @@ namespace BeautyAppWebServices
                 sda.SelectCommand = cmd;
                 ds = new DataSet();
                 sda.Fill(ds);
-
                 DataTable dt = ds.Tables[0];
                 String filePath = Server.MapPath("~/tempImages/");      //temporary folder to store images
 
@@ -247,24 +252,27 @@ namespace BeautyAppWebServices
                 foreach (DataRow dr in dt.Rows)
                 {
                     row = new Dictionary<string, object>();
+                    //adding data in JSON
                     foreach (DataColumn col in dt.Columns)
                     {
-                        if (imgColName == col.ColumnName)                   //checking is that the coloumn contain binary image
+                        if ( !imgColName.Contains(col.ColumnName))                  
+                       {
+                         if( !imgFileNameCol.Contains(col.ColumnName))                           
+                             row.Add(col.ColumnName, dr[col]);
+                        }
+                    }
+                    //adding image details in JSON
+                    for (int i = 0; i < imgColName.Count; i++)
+                    {
+                        if (dr[imgColName[i]as string] != DBNull.Value)
                         {
-                            if (dr[col] != DBNull.Value)                    //checking for no image uploaded(null)
+                            String fileURL = filePath + DateTime.Now.ToString("ddHHmmssfff") + dr[imgFileNameCol[i] as string];
+                            if (!System.IO.File.Exists(fileURL))
                             {
-                                String fileURL = filePath + DateTime.Now.ToString("ddHHmmssfff") + dr[imgFileNameCol];//timestamping imagefilename
-                                if (!System.IO.File.Exists(fileURL))         
-                                {
-                                    byte[] buffer = (byte[])dr[col];                                
-                                    System.IO.File.WriteAllBytes(fileURL, buffer); //writing file with image name from coloumn imgFileNameCol
-                                }                                        
-                            row.Add("url", fileURL);                        //giving url in JSON
+                                byte[] buffer = (byte[])dr[imgColName[i] as string];
+                                System.IO.File.WriteAllBytes(fileURL, buffer);
                             }
-                        }                                       
-                        else                                                              //JSON adding each item
-                        {if(col.ColumnName != imgFileNameCol)                           //skipping imageFileName in JSON 
-                            row.Add(col.ColumnName, dr[col]);
+                            row.Add(imgColName[i] as string, fileURL);
                         }
                     }
                     rows.Add(row);
@@ -285,6 +293,47 @@ namespace BeautyAppWebServices
 
             }
             
+        }
+
+
+        public String getDbDataAsJSON(SqlCommand cmd)
+        {
+            try
+            {
+                DataSet ds = null;
+                SqlDataAdapter sda = new SqlDataAdapter();
+                sda.SelectCommand = cmd;
+                ds = new DataSet();
+                sda.Fill(ds);
+                DataTable dt = ds.Tables[0];
+                System.Web.Script.Serialization.JavaScriptSerializer serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+                List<Dictionary<string, object>> rows = new List<Dictionary<string, object>>();
+                Dictionary<string, object> row;
+                foreach (DataRow dr in dt.Rows)
+                {
+                    row = new Dictionary<string, object>();
+                    foreach (DataColumn col in dt.Columns)
+                    {
+                       row.Add(col.ColumnName, dr[col]);
+                    }
+                    rows.Add(row);
+                }
+
+                this.Context.Response.ContentType = "";
+
+                return serializer.Serialize(rows);
+
+            }
+            catch (Exception)
+            {
+
+                return "";
+            }
+            finally
+            {
+
+            }
+
         }
 
 
