@@ -157,7 +157,7 @@ namespace BeautyAppWebServices
         }
 
         [WebMethod]
-        public string GetSearchResults(string ServiceCode, string sTypeCode)
+        public string GetSearchResults(string ServiceCode, string sTypeCode, string user)
         {
             SqlConnection con = null;
 
@@ -169,6 +169,7 @@ namespace BeautyAppWebServices
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@ServiceCode", ServiceCode);
                 cmd.Parameters.AddWithValue("@S_typeCode", sTypeCode);
+                cmd.Parameters.AddWithValue("@user", user);
                 ArrayList imgColNames = new ArrayList();
                 ArrayList imgFileNameCols = new ArrayList();
                 imgColNames.Add("StyleImg");
