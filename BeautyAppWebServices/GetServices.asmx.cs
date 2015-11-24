@@ -195,6 +195,38 @@ namespace BeautyAppWebServices
             return "";
         }
 
+        [WebMethod]
+        public string AddToFavorites(string user, string sTypeCode, string providerCode)
+        {
+            SqlConnection con = null;
+
+            try
+            {
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand("AddFavorites", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@user", user);
+                cmd.Parameters.AddWithValue("@S_typeCode", sTypeCode);
+                cmd.Parameters.AddWithValue("@provider", providerCode);
+                cmd.ExecuteNonQuery();
+             }
+            catch (Exception ex)
+            {
+
+            }
+            finally
+            {
+                if (con != null)
+                {
+
+                    con.Dispose();
+
+                }
+            }
+
+            return "";
+        }
 
         [WebMethod]
         public string GetServiceProviderDetails(string ProviderCode, string sTypeCode)
