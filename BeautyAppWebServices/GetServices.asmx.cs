@@ -196,7 +196,7 @@ namespace BeautyAppWebServices
         }
 
         [WebMethod]
-        public string AddToFavorites(string user, string sTypeCode, string providerCode)
+        public string AddToFavorites(string user, string sTypeCode, string providerCode,string addORremove)
         {
             SqlConnection con = null;
 
@@ -209,6 +209,7 @@ namespace BeautyAppWebServices
                 cmd.Parameters.AddWithValue("@user", user);
                 cmd.Parameters.AddWithValue("@S_typeCode", sTypeCode);
                 cmd.Parameters.AddWithValue("@provider", providerCode);
+                cmd.Parameters.AddWithValue("@addORremove", addORremove);
                 cmd.ExecuteNonQuery();
              }
             catch (Exception ex)
