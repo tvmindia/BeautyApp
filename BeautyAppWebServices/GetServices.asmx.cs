@@ -267,6 +267,43 @@ namespace BeautyAppWebServices
             return "";
         }
 
+        [WebMethod]
+        public string GetDetailsOfItems(string ProviderCode, string serviceCode, string sTypeCode)
+        {
+            SqlConnection con = null;
+
+            try
+            {
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand("GetDetailsOfItems", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@ProviderCode", ProviderCode);
+                cmd.Parameters.AddWithValue("@serviceCode", serviceCode);
+                cmd.Parameters.AddWithValue("@S_typeCode", sTypeCode);
+                ArrayList imgColNames = new ArrayList();
+                ArrayList imgFileNameCols = new ArrayList();
+                imgColNames.Add("StyleImg");
+                imgFileNameCols.Add("StyleImageName");
+                return getDbDataAsJSON(cmd, imgColNames, imgFileNameCols);  //passing col names of image and imagefilename
+            }
+            catch (Exception ex)
+            {
+
+            }
+            finally
+            {
+                if (con != null)
+                {
+
+                    con.Dispose();
+
+                }
+            }
+
+            return "";
+        }
+
 
         public String getDbDataAsJSON(SqlCommand cmd, ArrayList imgColName, ArrayList imgFileNameCol)
         {
