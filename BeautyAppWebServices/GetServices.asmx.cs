@@ -230,7 +230,7 @@ namespace BeautyAppWebServices
         }
 
         [WebMethod]
-        public string GetServiceProviderDetails(string ProviderCode, string sTypeCode)
+        public string GetServiceProviderDetails(string ProviderCode, string serviceCode, string sTypeCode)
         {
             SqlConnection con = null;
 
@@ -242,6 +242,7 @@ namespace BeautyAppWebServices
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@ProviderCode", ProviderCode);
                 cmd.Parameters.AddWithValue("@S_typeCode", sTypeCode);
+                cmd.Parameters.AddWithValue("@serviceCode", serviceCode);
                 ArrayList imgColNames = new ArrayList();
                 ArrayList imgFileNameCols = new ArrayList();
                 imgColNames.Add("ProviderImage");
