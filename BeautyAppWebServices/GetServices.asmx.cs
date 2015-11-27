@@ -269,7 +269,7 @@ namespace BeautyAppWebServices
         }
 
         [WebMethod]
-        public string GetDetailsOfItems(string ProviderCode, string serviceCode, string sTypeCode)
+        public string GetDetailsOfItems(string ProviderCode, string serviceCode, string sTypeCode, string req_type)
         {
             SqlConnection con = null;
 
@@ -282,6 +282,7 @@ namespace BeautyAppWebServices
                 cmd.Parameters.AddWithValue("@ProviderCode", ProviderCode);
                 cmd.Parameters.AddWithValue("@serviceCode", serviceCode);
                 cmd.Parameters.AddWithValue("@S_typeCode", sTypeCode);
+                cmd.Parameters.AddWithValue("@req_type", req_type);
                 ArrayList imgColNames = new ArrayList();
                 ArrayList imgFileNameCols = new ArrayList();
                 imgColNames.Add("StyleImg");
