@@ -307,6 +307,59 @@ namespace BeautyAppWebServices
         }
 
 
+        [WebMethod]
+        public string AddUsers(string username, string password, string mobile, string email, string gender)
+        {
+            SqlConnection con = null;
+
+            try
+            {
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand("AddUsers", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@user_name", username);
+                cmd.Parameters.AddWithValue("@password", password);
+                cmd.Parameters.AddWithValue("@mobile", mobile);
+                cmd.Parameters.AddWithValue("@email", email);
+                cmd.Parameters.AddWithValue("@gender", gender);
+                
+                //output messages
+                SqlParameter outMsg1 = cmd.Parameters.Add("@msg", SqlDbType.NVarChar, 100);
+                outMsg1.Direction = ParameterDirection.Output;
+                SqlParameter outMsg2 = cmd.Parameters.Add("@pass", SqlDbType.Bit);
+                outMsg2.Direction = ParameterDirection.Output;
+                cmd.ExecuteNonQuery();
+                String msg = outMsg1.Value.ToString();
+                Boolean pass = (Boolean)outMsg2.Value;
+
+                //making it as JSON
+                System.Web.Script.Serialization.JavaScriptSerializer serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+                Dictionary<string, object> row = new Dictionary<string, object>();
+                List<Dictionary<string, object>> rows = new List<Dictionary<string, object>>();
+                row.Add("msg", msg);
+                row.Add("pass", pass);
+                rows.Add(row);
+                return serializer.Serialize(rows);
+            }
+            catch (Exception ex)
+            {
+
+            }
+            finally
+            {
+                if (con != null)
+                {
+
+                    con.Dispose();
+
+                }
+            }
+
+            return "";
+        }
+
+
         public String getDbDataAsJSON(SqlCommand cmd, ArrayList imgColName, ArrayList imgFileNameCol)
         {
             try
