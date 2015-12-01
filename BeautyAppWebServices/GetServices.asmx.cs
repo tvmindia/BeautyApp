@@ -360,6 +360,73 @@ namespace BeautyAppWebServices
         }
 
 
+        [WebMethod]
+        public string UserLogin(string email, string password)
+        {
+            SqlConnection con = null;
+
+            try
+            {
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand("UserLogin", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@email", email);
+                cmd.Parameters.AddWithValue("@password", password);
+                
+                //output messages
+                SqlParameter outMsg1 = cmd.Parameters.Add("@msg", SqlDbType.NVarChar, 100);
+                outMsg1.Direction = ParameterDirection.Output;
+                SqlParameter outMsg2 = cmd.Parameters.Add("@pass", SqlDbType.Bit);
+                outMsg2.Direction = ParameterDirection.Output;
+                SqlParameter outMsg3 = cmd.Parameters.Add("@user_name", SqlDbType.NVarChar, 30);
+                outMsg3.Direction = ParameterDirection.Output;
+                SqlParameter outMsg4 = cmd.Parameters.Add("@mobile", SqlDbType.NVarChar, 20);
+                outMsg4.Direction = ParameterDirection.Output;
+                SqlParameter outMsg5 = cmd.Parameters.Add("@gender", SqlDbType.NVarChar, 7);
+                outMsg5.Direction = ParameterDirection.Output;
+
+                cmd.ExecuteNonQuery();
+                String msg = outMsg1.Value.ToString();
+                Boolean pass = (Boolean)outMsg2.Value;
+                String user_name = outMsg3.Value.ToString();
+                String mobile_no = outMsg4.Value.ToString();
+                String gender = outMsg5.Value.ToString();
+
+                //making it as JSON
+                System.Web.Script.Serialization.JavaScriptSerializer serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+                Dictionary<string, object> row = new Dictionary<string, object>();
+                List<Dictionary<string, object>> rows = new List<Dictionary<string, object>>();
+                row.Add("msg", msg);
+                row.Add("pass", pass);
+                if (pass)
+                {
+                    row.Add("user_name", user_name);
+                    row.Add("mobile_no", mobile_no);
+                    row.Add("gender", gender);
+                }
+               
+                rows.Add(row);
+                return serializer.Serialize(rows);
+            }
+            catch (Exception ex)
+            {
+
+            }
+            finally
+            {
+                if (con != null)
+                {
+
+                    con.Dispose();
+
+                }
+            }
+
+            return "";
+        }
+
+
         public String getDbDataAsJSON(SqlCommand cmd, ArrayList imgColName, ArrayList imgFileNameCol)
         {
             try
