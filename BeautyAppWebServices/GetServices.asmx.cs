@@ -481,7 +481,7 @@ namespace BeautyAppWebServices
         }
 
         [WebMethod]
-        public string Booking(string bookingID, string user, string sTypeCode, string providerCode, DateTime timing,string bookORcancel)
+        public string Booking(string bookingID, string user, string serviceCode, string sTypeCode, string providerCode, DateTime timing,string bookORcancel)
         {
             SqlConnection con = null;
 
@@ -492,6 +492,7 @@ namespace BeautyAppWebServices
                 SqlCommand cmd = new SqlCommand("Booking", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@user", user);
+                cmd.Parameters.AddWithValue("@serviceCode", serviceCode);
                 cmd.Parameters.AddWithValue("@S_typeCode", sTypeCode);
                 cmd.Parameters.AddWithValue("@provider", providerCode);
                 cmd.Parameters.AddWithValue("@timing", timing);
