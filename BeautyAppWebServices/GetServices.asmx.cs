@@ -540,6 +540,42 @@ namespace BeautyAppWebServices
             return "";
         }
 
+        [WebMethod]
+        public string GetBookingDetails(string Email)
+        {
+            SqlConnection con = null;
+
+            try
+            {
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand("GetBookingDetails", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@email", Email);
+                ArrayList imgColNames = new ArrayList();
+                ArrayList imgFileNameCols = new ArrayList();
+                imgColNames.Add("StyleImg");
+                imgFileNameCols.Add("StyleImageName");
+                return getDbDataAsJSON(cmd, imgColNames, imgFileNameCols);
+
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+            finally
+            {
+                if (con != null)
+                {
+
+                    con.Dispose();
+
+                }
+            }
+
+            return "";
+        }
 
         public String getDbDataAsJSON(SqlCommand cmd, ArrayList imgColName, ArrayList imgFileNameCol)
         {
