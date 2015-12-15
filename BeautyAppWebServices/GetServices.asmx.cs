@@ -10,6 +10,7 @@ using System.Xml;
 using System.Xml.Serialization;
 using System.Collections;
 using System.Net.Mail;
+using System.Threading;
 
 
 namespace BeautyAppWebServices
@@ -527,14 +528,18 @@ namespace BeautyAppWebServices
                 //sending mail
                 if (pass==true)
                 {
-                    SendMail(bookORcancel, activityTime, bookingID);
+                    new Thread(delegate()
+                    {
+                        SendMail(bookORcancel, activityTime, bookingID);
+                    }).Start();
+                    
                 }
 
                 return serializer.Serialize(rows);
             }
             catch (Exception ex)
             {
-
+                throw ex;
             }
             finally
             {
