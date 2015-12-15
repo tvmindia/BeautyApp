@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="GetServices.asmx" />
+    <Content Include="Templates\mailTemplate.html" />
     <Content Include="UploadImages.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
