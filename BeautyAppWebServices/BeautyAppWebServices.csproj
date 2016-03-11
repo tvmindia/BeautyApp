@@ -83,6 +83,7 @@
   <ItemGroup>
     <None Include="Properties\PublishProfiles\a.pubxml" />
     <None Include="Properties\PublishProfiles\b.pubxml" />
+    <None Include="Properties\PublishProfiles\webpublish.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

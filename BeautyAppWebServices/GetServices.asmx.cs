@@ -42,7 +42,14 @@ namespace BeautyAppWebServices
             }
             catch (Exception ex)
             {
-
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand("ErrorLogInsert", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@ErrorLog", ex.Message);
+                cmd.Parameters.AddWithValue("@UserName", "GetServicesList");
+                cmd.ExecuteNonQuery();
+                return ex.Message;
             }
             finally
             {
@@ -78,7 +85,14 @@ namespace BeautyAppWebServices
             }
             catch (Exception ex)
             {
-
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand("ErrorLogInsert", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@ErrorLog", ex.Message);
+                cmd.Parameters.AddWithValue("@UserName", "GetOffers");
+                cmd.ExecuteNonQuery();
+                return ex.Message;
             }
             finally
             {
@@ -111,6 +125,14 @@ namespace BeautyAppWebServices
             }
             catch (Exception ex)
             {
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand("ErrorLogInsert", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@ErrorLog", ex.Message);
+                cmd.Parameters.AddWithValue("@UserName", "GetNotifications");
+                cmd.ExecuteNonQuery();
+                return ex.Message;
 
             }
             finally
@@ -143,7 +165,14 @@ namespace BeautyAppWebServices
             }
             catch (Exception ex)
             {
-
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand("ErrorLogInsert", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@ErrorLog", ex.Message);
+                cmd.Parameters.AddWithValue("@UserName", "GetServiceTypes");
+                cmd.ExecuteNonQuery();
+                return ex.Message;
             }
             finally
             {
@@ -182,7 +211,14 @@ namespace BeautyAppWebServices
             }
             catch (Exception ex)
             {
-
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand("ErrorLogInsert", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@ErrorLog", ex.Message);
+                cmd.Parameters.AddWithValue("@UserName", "GetSearchResults"+"user:"+user);
+                cmd.ExecuteNonQuery();
+                return ex.Message;
             }
             finally
             {
@@ -216,7 +252,14 @@ namespace BeautyAppWebServices
              }
             catch (Exception ex)
             {
-
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand("ErrorLogInsert", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@ErrorLog", ex.Message);
+                cmd.Parameters.AddWithValue("@UserName", "AddToFavorites" + "user:" + user);
+                cmd.ExecuteNonQuery();
+                return ex.Message;
             }
             finally
             {
@@ -255,7 +298,14 @@ namespace BeautyAppWebServices
             }
             catch (Exception ex)
             {
-
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand("ErrorLogInsert", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@ErrorLog", ex.Message);
+                cmd.Parameters.AddWithValue("@UserName", "GetServiceProviderDetails");
+                cmd.ExecuteNonQuery();
+                return ex.Message;
             }
             finally
             {
@@ -293,7 +343,14 @@ namespace BeautyAppWebServices
             }
             catch (Exception ex)
             {
-
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand("ErrorLogInsert", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@ErrorLog", ex.Message);
+                cmd.Parameters.AddWithValue("@UserName", "GetDetailsOfItems");
+                cmd.ExecuteNonQuery();
+                return ex.Message;
             }
             finally
             {
@@ -346,7 +403,14 @@ namespace BeautyAppWebServices
             }
             catch (Exception ex)
             {
-
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand("ErrorLogInsert", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@ErrorLog", ex.Message);
+                cmd.Parameters.AddWithValue("@UserName", "AddUsers" + ":user:" + username);
+                cmd.ExecuteNonQuery();
+                return ex.Message;
             }
             finally
             {
@@ -413,7 +477,14 @@ namespace BeautyAppWebServices
             }
             catch (Exception ex)
             {
-
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand("ErrorLogInsert", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@ErrorLog", ex.Message);
+                cmd.Parameters.AddWithValue("@UserName", "UserLogin" + ":user:" + email);
+                cmd.ExecuteNonQuery();
+                return ex.Message;
             }
             finally
             {
@@ -467,7 +538,14 @@ namespace BeautyAppWebServices
             }
             catch (Exception ex)
             {
-
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand("ErrorLogInsert", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@ErrorLog", ex.Message);
+                cmd.Parameters.AddWithValue("@UserName", "EditUser" + ":user:" + username);
+                cmd.ExecuteNonQuery();
+                return ex.Message;
             }
             finally
             {
@@ -541,7 +619,14 @@ namespace BeautyAppWebServices
             }
             catch (Exception ex)
             {
-                throw ex;
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand("ErrorLogInsert", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@ErrorLog", ex.Message);
+                cmd.Parameters.AddWithValue("@UserName", "Booking" + ":user:" + user);
+                cmd.ExecuteNonQuery();
+                return ex.Message;
             }
             finally
             {
@@ -579,7 +664,14 @@ namespace BeautyAppWebServices
             }
             catch (Exception ex)
             {
-
+                dbConnection dcon = new dbConnection();
+                con = dcon.GetDBConnection();
+                SqlCommand cmd = new SqlCommand("ErrorLogInsert", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@ErrorLog", ex.Message);
+                cmd.Parameters.AddWithValue("@UserName", "GetBookingDetails" + ":user:" + Email);
+                cmd.ExecuteNonQuery();
+                return ex.Message;
             }
             finally
             {
@@ -643,10 +735,18 @@ namespace BeautyAppWebServices
                 return serializer.Serialize(rows);
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                return "";
+                dbConnection dcon = new dbConnection();
+                SqlConnection con = null;
+                con = dcon.GetDBConnection();
+                SqlCommand cmdd = new SqlCommand("ErrorLogInsert", con);
+                cmdd.CommandType = CommandType.StoredProcedure;
+                cmdd.Parameters.AddWithValue("@ErrorLog", ex.Message);
+                cmdd.Parameters.AddWithValue("@UserName", "getDbDataAsJSON_withimage");
+                cmdd.ExecuteNonQuery();
+                return ex.Message;
             }
             finally
             {
@@ -683,10 +783,17 @@ namespace BeautyAppWebServices
                 return serializer.Serialize(rows);
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                return "";
+                dbConnection dcon = new dbConnection();
+                SqlConnection con = null;
+                con = dcon.GetDBConnection();
+                SqlCommand cmdd = new SqlCommand("ErrorLogInsert", con);
+                cmdd.CommandType = CommandType.StoredProcedure;
+                cmdd.Parameters.AddWithValue("@ErrorLog", ex.Message);
+                cmdd.Parameters.AddWithValue("@UserName", "getDbDataAsJSON_withimage");
+                cmdd.ExecuteNonQuery();
+                return ex.Message;
             }
             finally
             {
